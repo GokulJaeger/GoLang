@@ -1,10 +1,9 @@
 package main
 
 import (
-    "flag"
-    "fmt"
-    "os"
-    "strconv"
+	"flag"
+	"fmt"
+	"strconv"
 )
 
 var student [3][11]string
@@ -18,17 +17,22 @@ func addstd() string {
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 7; j++ {
 			fmt.Printf(quest[j])
-			fmt.Scanln(&student[j])
+			fmt.Scanln(&student[i][j])
 		}
 	}
 	return "Add Function"
 }
 
 func viewstd() string {
-	fmt.Println("Student List")
-	for i := 0; i < 3; i++ {
-		for j := 0; j < 11; j++ {
-			fmt.Println(student[j])
+
+	if student[0][0] == "" {
+		fmt.Println("No records found!")
+	} else {
+		fmt.Println("Student List")
+		for i := 0; i < 3; i++ {
+			for j := 0; j < 11; j++ {
+				fmt.Println(student[i][j])
+			}
 		}
 	}
 	return "View Student Function"
@@ -36,11 +40,13 @@ func viewstd() string {
 
 func searchstd(a int) string {
 	flag.Parse()
-	
-	for i := 0; i < 11; i++ {
-		v, _ := strconv.Atoi(student[i])
-		if v == a {
 
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 11; j++ {
+			v, _ := strconv.Atoi(student[i][j])
+			if v == a {
+
+			}
 		}
 	}
 	return "Search Student Function"
@@ -50,23 +56,25 @@ func main() {
 
 	var choice int
 	var roll int
-	fmt.Println("1.Add Student  2.View Students  3.Search  4.Exit")
-	fmt.Println("Enter your choice")
-	fmt.Scanln(&choice)
+	for {
+		fmt.Println("1.Add Student  2.View Students  3.Search  4.Exit")
+		fmt.Println("Enter your choice")
+		fmt.Scanln(&choice)
 
-	if choice == 1 {
-		st1 := addstd()
-		fmt.Printf(st1)
-	} else if choice == 2 {
-		st2 := viewstd()
-		fmt.Printf(st2)
-	} else if choice == 3 {
-		fmt.Println("Enter the roll number")
-		fmt.Scanln(&roll)
-		st3 := searchstd(roll)
-		fmt.Printf(st3)
-	} else {
-		fmt.Println("Thanks for using student portal.")
+		if choice == 1 {
+			st1 := addstd()
+			fmt.Printf(st1)
+		} else if choice == 2 {
+			st2 := viewstd()
+			fmt.Printf(st2)
+		} else if choice == 3 {
+			fmt.Println("Enter the roll number")
+			fmt.Scanln(&roll)
+			st3 := searchstd(roll)
+			fmt.Printf(st3)
+		} else {
+			fmt.Println("Thanks for using student portal.")
+		}
 	}
 
 }
