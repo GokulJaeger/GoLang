@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	// "flag"
 	"fmt"
 	"strconv"
 )
@@ -9,47 +9,77 @@ import (
 var student [3][11]string
 
 // "Roll Number", "Name", "Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Total", "Average", "Number of failed Subjects", "Grade", "Failed marks"
-var quest = [7]string{"Roll Number", "Name", "Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5"}
+var quest = [10]string{"Roll Number", "Name", "Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Total", "Average", "Number of failed Subjects"}
 var rw = 0
 
-func addstd() string {
+func addstd() {
 	fmt.Println("Enter 3 Students details!.")
 	for i := 0; i < 3; i++ {
+		sum := 0
+		fail := 0
 		for j := 0; j < 7; j++ {
 			fmt.Printf(quest[j])
 			fmt.Scanln(&student[i][j])
+			if j > 3 && j < 7 {
+				m,_ := strconv.Atoi(student[i][j])
+				if m < 0 {
+					fmt.Println("Mark should not be negative!")
+					j--
+				} else if m > 100 {
+					fmt.Println("Mart should not be greater than 100")
+					j--
+				} else {
+					// m1, _ := strconv.Atoi(student[i][j])
+					sum = sum + m
+					if m < 50 {
+						student[i][j] = student[i][j] + " fail"
+						fail++
+					}
+				}
+
+			}
+			t := strconv.Itoa(sum)
+			student[i][7] = t
+			avrg := sum / 5
+			avg := strconv.Itoa(avrg)
+			student[i][8] = avg
+			f := strconv.Itoa(fail)
+			student[i][9] = f
 		}
 	}
-	return "Add Function"
 }
 
-func viewstd() string {
+func viewstd() {
 
 	if student[0][0] == "" {
 		fmt.Println("No records found!")
 	} else {
 		fmt.Println("Student List")
 		for i := 0; i < 3; i++ {
-			for j := 0; j < 11; j++ {
-				fmt.Println(student[i][j])
+			fmt.Println("count:", i+1)
+			for j := 0; j < 10; j++ {
+				fmt.Println(quest[j], " : ", student[i][j])
 			}
 		}
 	}
-	return "View Student Function"
 }
 
-func searchstd(a int) string {
-	flag.Parse()
-
+func searchstd(a int) {
+	// flag.Parse()
+	lc := 0
 	for i := 0; i < 3; i++ {
-		for j := 0; j < 11; j++ {
+		for j := 0; j < 3; j++ {
 			v, _ := strconv.Atoi(student[i][j])
 			if v == a {
-
+				fmt.Println(student[i])
+			} else {
+				lc++
+			}
+			if lc == 2 {
+				fmt.Println("No records found!")
 			}
 		}
 	}
-	return "Search Student Function"
 }
 
 func main() {
@@ -62,18 +92,16 @@ func main() {
 		fmt.Scanln(&choice)
 
 		if choice == 1 {
-			st1 := addstd()
-			fmt.Printf(st1)
+			addstd()
 		} else if choice == 2 {
-			st2 := viewstd()
-			fmt.Printf(st2)
+			viewstd()
 		} else if choice == 3 {
 			fmt.Println("Enter the roll number")
 			fmt.Scanln(&roll)
-			st3 := searchstd(roll)
-			fmt.Printf(st3)
+			searchstd(roll)
 		} else {
 			fmt.Println("Thanks for using student portal.")
+			break
 		}
 	}
 
