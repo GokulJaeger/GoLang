@@ -20,13 +20,16 @@ func addstd() {
 		for j := 0; j < 7; j++ {
 			fmt.Printf(quest[j])
 			fmt.Scanln(&student[i][j])
-			if j > 3 && j < 7 {
-				m,_ := strconv.Atoi(student[i][j])
+			if j > 1 && j < 7 {
+				m, _ := strconv.Atoi(student[i][j])
 				if m < 0 {
 					fmt.Println("Mark should not be negative!")
 					j--
 				} else if m > 100 {
-					fmt.Println("Mart should not be greater than 100")
+					fmt.Println("Mark should not be greater than 100!")
+					j--
+				} else if student[i][j] == "" {
+					fmt.Println("Mark should not be null!")
 					j--
 				} else {
 					// m1, _ := strconv.Atoi(student[i][j])
@@ -72,13 +75,12 @@ func searchstd(a int) {
 			v, _ := strconv.Atoi(student[i][j])
 			if v == a {
 				fmt.Println(student[i])
-			} else {
 				lc++
 			}
-			if lc == 2 {
-				fmt.Println("No records found!")
-			}
 		}
+	}
+	if lc == 0 {
+		fmt.Println("No records found!")
 	}
 }
 
@@ -98,10 +100,16 @@ func main() {
 		} else if choice == 3 {
 			fmt.Println("Enter the roll number")
 			fmt.Scanln(&roll)
-			searchstd(roll)
-		} else {
-			fmt.Println("Thanks for using student portal.")
+			if roll < 0 {
+				fmt.Println("Roll number cannot be negative!")
+			} else {
+				searchstd(roll)
+			}
+		} else if choice == 4 {
+			fmt.Println("Thanks for using student portal!")
 			break
+		} else {
+			fmt.Println("Invalid Option!")
 		}
 	}
 
