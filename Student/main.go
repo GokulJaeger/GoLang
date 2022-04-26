@@ -67,6 +67,8 @@ func viewstd() {
 	}
 }
 
+//re:=regex.MustComplie("[a-zA-Z]$")
+//if re.MatchString(student[i][2])
 func searchstd(a int) {
 	// flag.Parse()
 	lc := 0
