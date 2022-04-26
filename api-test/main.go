@@ -1,11 +1,11 @@
 package main
 
 import (
+	// "encoding/json"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"strconv"
-
-	"github.com/gorilla/mux"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -18,6 +18,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		x, _ := strconv.Atoi(r.FormValue("io"))
 		y, _ := strconv.Atoi(r.FormValue("it"))
 		z := x + y
+
 		w.WriteHeader(http.StatusOK)
 		res := `{"message": ` + strconv.Itoa(z) + `}`
 		w.Write([]byte(res))
