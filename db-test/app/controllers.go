@@ -75,6 +75,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	type updateBody struct {
 		Name string `json:"name"` //value that has to be matched
 		City string `json:"city"` // value that has to be modified
+		Age  string `json:"age"`  // value that has to be modified
 	}
 	var body updateBody
 	e := json.NewDecoder(r.Body).Decode(&body)
@@ -88,7 +89,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 		ReturnDocument: &after,
 	}
-	update := bson.D{{"$set", bson.D{{"city", body.City}}}}
+	update := bson.D{{"$set", bson.D{{"city", body.City}, {"age", body.Age}}}}
 	updateResult := userCollection.FindOneAndUpdate(context.TODO(), filter, update, &returnOpt)
 
 	var result primitive.M
